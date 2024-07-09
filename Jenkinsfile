@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t izdihargh/projetnodehubjenkins .'
+        sh 'docker build -t izdihargh/projetnodehubjenkinsnew .'
        
       }
     }
@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push izdihargh/projetnodehubjenkins'
+        sh 'docker push izdihargh/projetnodehubjenkinsnew'
       }
     }
   }

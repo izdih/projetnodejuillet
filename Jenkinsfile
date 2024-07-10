@@ -1,27 +1,30 @@
-pipeline{
-  environment {
-   registry = "izdihargh/node-app"
-   registryCredential = 'dockerhub' 
-   dockerImage = ''
-  }
+pipeline {
   agent any
-    stages {
-        stage('Building image') {
-            steps{
-                script {
-                  dockerImage = docker.build registry + ":latest"
-                }
-             }
-          }
-          stage('Push Image') {
-              steps{
-                  script
-                    {
-                        docker.withRegistry( '', registryCredential ) {
-                            dockerImage.push()
-                        }
-                   }
-               }
-            }
+  
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'docker build -t izdihargh/projetnodehubjenkinsnew .'
+       
+      }
     }
-} 
+    stage('Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage('Push') {
+      steps {
+        sh 'docker push izdihargh/projetnodehubjenkinsnew'
+      }
+    }
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+  }
+}

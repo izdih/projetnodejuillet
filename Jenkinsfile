@@ -1,8 +1,8 @@
 pipeline{
   environment {
-    registry = "izdihargh/node-app"
-    registryCredential = 'dockerhub' 
-    dockerImage = ''
+   registry = "izdihargh/node-app"
+   registryCredential = 'dockerhub' 
+   dockerImage = ''
   }
   agent any
     stages {
